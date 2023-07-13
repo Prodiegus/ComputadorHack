@@ -2,30 +2,27 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
-    boolean verbose;
-    boolean stepByStep;
+    static boolean verbose;
+    static boolean stepByStep;
 
     public Main() {
         // constructor
-        this.verbose = false;
-        this.stepByStep = false;
+        verbose = false;
+        stepByStep = false;
     }
-    public static void showProgramLines(ArrayList<String> program) {
-        // this method will show all the lines of the program
-        for (String line : program) {
-            System.out.println(line);
-        }
-    }
-
     public static void run() {
         DirManager dirManager = new DirManager();
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> program = new ArrayList<String>();
+        ArrayList<String> program = new ArrayList<>();
 
         System.out.println("Welcome to the Hack Assembler!");
         System.out.print("Please enter the path of the file you want to run: ");
         try {
             program = dirManager.getProgram(scanner.nextLine());
+            if (stepByStep){
+                System.out.print("\n Press enter to continue...");
+                scanner.nextLine();
+            }
             while (program == null) {
                 System.out.println("The path you entered is not valid, please try again.");
                 System.out.print("Please enter the path of the file you want to run: ");
@@ -37,7 +34,21 @@ public class Main {
             System.err.println("We can't continue with the execution of the program.");
             System.exit(1);
         }
-        showProgramLines(program);
+
+        Executer executer = new Executer(verbose, stepByStep, program);
+        if (verbose) {
+            // verbose mode
+            System.out.println("this is the program you entered:");
+            executer.showProgramLines();
+            System.out.println("Lines: " + program.size());
+            System.out.println("The program was successfully loaded.");
+        }
+        if (stepByStep) {
+            // step by step mode
+            System.out.print("\nPress enter to execute the program...");
+            scanner.nextLine();
+        }
+        executer.run();
         scanner.close();
     }
 
@@ -49,16 +60,19 @@ public class Main {
             switch (args[0]) {
                 case "-v" -> {
                     // verbose mode
+                    verbose = true;
                     System.out.println("Verbose mode enabled.");
                     run();
                 }
                 case "-s" -> {
                     // step by step mode
-                    System.out.println("Step by step mode enabled.");
+                    stepByStep = true;
                     run();
                 }
                 case "-vs", "-sv" -> {
                     // verbose and step by step mode
+                    verbose = true;
+                    stepByStep = true;
                     System.out.println("Verbose and step by step mode enabled.");
                     run();
                 }
@@ -66,7 +80,7 @@ public class Main {
                     System.out.println("Invalid argument.");
                     System.out.println("Usage: java Main [-v] [-s] [-vs] [-sv]");
                     System.out.println("Options:");
-                    System.out.println("    -v: verbose mode");
+                    System.out.println("    -v: verbose mode (avoid extra debug information in the console)");
                     System.out.println("    -s: step by step mode");
                     System.out.println("    -vs: verbose and step by step mode");
                     System.out.println("    -sv: verbose and step by step mode");

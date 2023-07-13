@@ -13,7 +13,7 @@ public class DirManager {
 
     public ArrayList<String> getProgram(String path) {
         // open a file and then read it, line by line and return a list with all the lines
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         try {
             // we are going to try to open the file of the path
             File file = new File(path);
