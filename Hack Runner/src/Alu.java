@@ -105,35 +105,35 @@ public class Alu {
     }
 
     private String parseBinary(int n) {
+        if (verbose) {
+            System.out.println("Parsing " + n + " to binary.");
+        }
         boolean negative = false;
         if (n < 0) {
             negative = true;
             n *= -1;
         }
-        if (verbose) {
-            System.out.println("Parsing " + n + " to binary.");
-        }
         // this method will parse a number to binary
-        String binary = "";
+        StringBuilder binary = new StringBuilder();
 
         while (n > 0) {
-            binary += n % 2;
+            binary.append(n % 2);
             n /= 2;
         }
         while (binary.length() < 16) {
-            binary += "0";
+            binary.append("0");
         }
 
         if (negative) {
-            binary += "1";
+            binary.append("1");
         } else {
-            binary += "0";
+            binary.append("0");
         }
-        binary = new StringBuilder(binary).reverse().toString();
+        binary = new StringBuilder(new StringBuilder(binary.toString()).reverse().toString());
         if (verbose) {
             System.out.println("Binary: " + binary);
         }
-        return binary;
+        return binary.toString();
     }
 
     private int parseInt(String s) {
