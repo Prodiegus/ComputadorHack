@@ -83,11 +83,25 @@ public class Alu {
         return parseBinary(parseInt(D) & parseInt(MA));
     }
 
+    public String maandd() {
+        if (verbose) {
+            System.out.println("\nDoing the AND operation between " + MA + " and " + D+"\n");
+        }
+        return parseBinary(parseInt(MA) & parseInt(D));
+    }
+
     public String dorma() {
         if (verbose) {
             System.out.println("\nDoing the OR operation between " + D + " and " + MA+"\n");
         }
         return parseBinary(parseInt(D) | parseInt(MA));
+    }
+
+    public String maord(){
+        if (verbose) {
+            System.out.println("\nDoing the OR operation between " + MA + " and " + D+"\n");
+        }
+        return parseBinary(parseInt(MA) | parseInt(D));
     }
 
     public String notd() {
@@ -156,7 +170,11 @@ public class Alu {
         }
         return number;
     }
+
     public static void main(String[] args) {
+        /*
+        * This is the main method, here we are going to test the ALU
+        * */
         Alu alu = new Alu(true);
         alu.D = "0000000000000011";
         alu.MA = "0000000000000001";
@@ -172,6 +190,8 @@ public class Alu {
         System.out.println(alu.dorma());
         System.out.println(alu.notd());
         System.out.println(alu.notma());
+        System.out.println(alu.maandd());
+        System.out.println(alu.maord());
 
     }
 
