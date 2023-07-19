@@ -118,7 +118,15 @@ public class Alu {
         return parseBinary(~parseInt(MA));
     }
 
-    private String parseBinary(int n) {
+    public String minusX(String x) {
+        if (verbose) {
+            System.out.println("\nDoing the NOT operation to " + x+"\n");
+        }
+        int xvalue = parseInt(x);
+        return parseBinary(xvalue * -1);
+    }
+
+    public String parseBinary(int n) {
         if (verbose) {
             System.out.println("Parsing " + n + " to binary.");
         }
@@ -150,7 +158,7 @@ public class Alu {
         return binary.toString();
     }
 
-    private int parseInt(String s) {
+    public int parseInt(String s) {
         int number = 0;
         if (verbose) {
             System.out.print("Parsing " + s + " to ");
