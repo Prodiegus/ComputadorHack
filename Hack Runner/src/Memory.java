@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Memory {
     /**
@@ -11,7 +12,8 @@ public class Memory {
     public Memory(boolean verbose) {
         // constructor
         this.verbose = verbose;
-        this.slots = new String[32768];
+        this.slots = new String[65536];
+        this.M = "0000000000000000";
         // we need to initialize all the slots
         initSlots();
         if (verbose) {
@@ -56,10 +58,20 @@ public class Memory {
         }
     }
 
+    public void checkMemory() {
+        // this method will show all the slots of the memory except the one on 0
+        for (int i = 0; i < this.slots.length; i++) {
+            if (!Objects.equals(this.slots[i], "0000000000000000")) {
+                System.out.println("Slot " + i + ": " + this.slots[i]);
+            }
+        }
+    }
+
     private void initSlots() {
         // this method will initialize all the slots of the memory
         Arrays.fill(this.slots, "0000000000000000");
     }
+
 
     public static void main(String[] args) {
         // this is the main method
