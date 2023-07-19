@@ -34,8 +34,8 @@ public class Executer {
         String A = "0000000000000000";
         String D = "0000000000000000";
         String M = "0000000000000000";
-        for(int i = 0; i < program.size(); i++) {
-            String line = program.get(i);
+        for(pc = 0; pc < program.size(); pc++) {
+            String line = program.get(pc);
             if (verbose){
                 System.out.println("Parsing line: " + line);
             }
@@ -64,6 +64,10 @@ public class Executer {
                 String out = "0000000000000000";
 
                 // we will check the comp operation and temporally save the result on the local M register
+                if (verbose) {
+                    System.out.println("The comp is " + comp);
+                }
+
                 if (a.equals("0")) {
                     if (verbose) {
                         System.out.println("The a is 0.");
@@ -71,145 +75,91 @@ public class Executer {
                     switch (comp){
                         case "101010" -> {
                             // 0
-                            if (verbose) {
-                                System.out.println("The comp is 101010.");
-                            }
                             M = alu.parseBinary(0);
 
                         }
-                        case "1111111" -> {
+                        case "111111" -> {
                             // 1
-                            if (verbose) {
-                                System.out.println("The comp is 1111111.");
-                            }
                             M = alu.parseBinary(1);
                         }
                         case "111010" -> {
                             // -1
-                            if (verbose) {
-                                System.out.println("The comp is 111010.");
-                            }
                             M = alu.parseBinary(-1);
                         }
                         case "001100" -> {
                             // D
-                            if (verbose) {
-                                System.out.println("The comp is 001100.");
-                            }
                             M = D;
                         }
                         case "110000" -> {
                             // A
-                            if (verbose) {
-                                System.out.println("The comp is 110000.");
-                            }
                             M = A;
                         }
                         case "001101" -> {
                             // !D
-                            if (verbose) {
-                                System.out.println("The comp is 001101.");
-                            }
                             alu.D = D;
                             M = alu.notd();
                         }
                         case "110001" -> {
                             // !A
-                            if (verbose) {
-                                System.out.println("The comp is 110001.");
-                            }
                             alu.MA = A;
                             M = alu.notma();
                         }
                         case "001111" -> {
                             // -D
-                            if (verbose) {
-                                System.out.println("The comp is 001111.");
-                            }
                             alu.D = D;
                             M = alu.minusX(D);
                         }
                         case "110011" -> {
                             // -A
-                            if (verbose) {
-                                System.out.println("The comp is 110011.");
-                            }
                             alu.MA = A;
                             M = alu.minusX(A);
                         }
                         case "011111" -> {
                             // D+1
-                            if (verbose) {
-                                System.out.println("The comp is 011111.");
-                            }
                             alu.D = D;
                             M = alu.dplusone();
                         }
                         case "110111" -> {
                             // A+1
-                            if (verbose) {
-                                System.out.println("The comp is 110111.");
-                            }
                             alu.MA = A;
                             M = alu.maplusone();
                         }
                         case "001110" -> {
                             // D-1
-                            if (verbose) {
-                                System.out.println("The comp is 001110.");
-                            }
                             alu.D = D;
                             M = alu.dminusone();
                         }
                         case "110010" -> {
                             // A-1
-                            if (verbose) {
-                                System.out.println("The comp is 110010.");
-                            }
                             alu.MA = A;
                             M = alu.maminusone();
                         }
                         case "000010" -> {
                             // D+A
-                            if (verbose) {
-                                System.out.println("The comp is 000010.");
-                            }
                             alu.D = D;
                             alu.MA = A;
                             M = alu.dplusma();
                         }
                         case "010011" -> {
                             // D-A
-                            if (verbose) {
-                                System.out.println("The comp is 010011.");
-                            }
                             alu.D = D;
                             alu.MA = A;
                             M = alu.dminusma();
                         }
                         case "000111" -> {
                             // A-D
-                            if (verbose) {
-                                System.out.println("The comp is 000111.");
-                            }
                             alu.D = D;
                             alu.MA = A;
                             M = alu.maplusd();
                         }
                         case "000000" -> {
                             // D&A
-                            if (verbose) {
-                                System.out.println("The comp is 000000.");
-                            }
                             alu.D = D;
                             alu.MA = A;
                             M = alu.dandma();
                         }
                         case "010101" -> {
                             // D|A
-                            if (verbose) {
-                                System.out.println("The comp is 010101.");
-                            }
                             alu.D = D;
                             alu.MA = A;
                             M = alu.dorma();
@@ -229,88 +179,64 @@ public class Executer {
                     switch (comp){
                         case "110000" -> {
                             // M
-                            if (verbose) {
-                                System.out.println("The comp is 110000.");
-                            }
                             M = memory.getSlot(alu.parseInt(A));
 
                         }
                         case "110001" -> {
                             // !M
-                            if (verbose) {
-                                System.out.println("The comp is 110001.");
-                            }
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.notma();
                         }
                         case "110011" -> {
                             // -M
-                            if (verbose) {
-                                System.out.println("The comp is 110011.");
-                            }
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.minusX(memory.getSlot(alu.parseInt(A)));
                         }
                         case "110111" -> {
                             // M+1
-                            if (verbose) {
-                                System.out.println("The comp is 110111.");
-                            }
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.maplusone();
                         }
                         case "110010" -> {
                             // M-1
-                            if (verbose) {
-                                System.out.println("The comp is 110010.");
-                            }
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.maminusone();
                         }
                         case "000010" -> {
                             // D+M
-                            if (verbose) {
-                                System.out.println("The comp is 000010.");
-                            }
                             alu.D = D;
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.dplusma();
                         }
                         case "010011" -> {
                             // D-M
-                            if (verbose) {
-                                System.out.println("The comp is 010011.");
-                            }
                             alu.D = D;
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.dminusma();
                         }
                         case "000111" -> {
                             // M-D
-                            if (verbose) {
-                                System.out.println("The comp is 000111.");
-                            }
                             alu.D = D;
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.maplusd();
                         }
                         case "000000" -> {
                             // D&M
-                            if (verbose) {
-                                System.out.println("The comp is 000000.");
-                            }
                             alu.D = D;
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.dandma();
                         }
                         case "010101" -> {
                             // D|M
-                            if (verbose) {
-                                System.out.println("The comp is 010101.");
-                            }
                             alu.D = D;
                             alu.MA = memory.getSlot(alu.parseInt(A));
                             M = alu.dorma();
+                        }
+                        default -> {
+                            System.err.println("An error has occurred.");
+                            System.err.println("Error: Invalid comp.");
+                            System.err.println("We can't continue with the execution of the program.");
+                            System.exit(1);
                         }
                     }
                 }
@@ -558,15 +484,15 @@ public class Executer {
     }
     private String getComp(String line) {
         // this method will return the comp of the C instruction
-        return line.substring(4, 9);
+        return line.substring(4, 10);
     }
     private String getDest(String line) {
         // this method will return the dest of the C instruction
-        return line.substring(10, 12);
+        return line.substring(10, 13);
     }
     private String getJump(String line) {
         // this method will return the jump of the C instruction
-        return line.substring(13, 15);
+        return line.substring(13, 16);
     }
 }
 
