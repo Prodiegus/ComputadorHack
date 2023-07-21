@@ -15,6 +15,7 @@ public class Executer {
         this.program = program;
         this.memory = new Memory(verbose);
         this.alu = new Alu(verbose);
+        setSomeMemorySlots();
     }
 
     public void showProgramLines() {
@@ -22,6 +23,25 @@ public class Executer {
         for (String line : program) {
             System.out.println(line);
         }
+    }
+
+    public void setSomeMemorySlots(){
+        System.out.println("Do you want to set some memory slots? (y/n)");
+		Scanner scanner = new Scanner(System.in);
+		String answer = scanner.nextLine();
+        if (answer.equals("y")){
+            setSlots();
+        }
+    }
+
+    private void setSlots(){
+        System.out.println("Wich slot number do you want to set?");
+        Scanner scanner = new Scanner(System.in);
+        int slot = scanner.nextInt();
+        System.out.println("What value do you want to set?");
+        int value = scanner.nextInt();
+        memory.setSlot(slot, alu.parseBinary(value));
+        setSomeMemorySlots();
     }
 
     public void run() {
